@@ -15,11 +15,19 @@ class Log:
     author: str
     created: datetime
 
+    def dict(self):
+        return self.__dict__
+
 
 class AuditLogRepository(ABC):
 
     @abstractmethod
     def save(self, log: Log) -> None:
+        raise NotImplementedError
+
+    @abstractmethod
+    def search(self, instance_type: str, instance_id: int, created_from: str = None, created_to: str = None,
+               author: str = None) -> list[Log]:
         raise NotImplementedError
 
 
