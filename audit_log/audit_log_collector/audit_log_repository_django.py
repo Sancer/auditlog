@@ -12,7 +12,7 @@ class AuditLogRepositoryDjango(AuditLogRepository):
         log_model = LogModel(  # TODO: se podría hacer con __dict__ y luego spread operator, pero prefiero ser explicito
             instance_type=log.instance_type,
             instance_id=log.instance_id,
-            previos_state=log.previous_state,
+            previous_state=log.previous_state,
             actual_state=log.actual_state,
             author=log.author,
             created=log.created,
