@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Log(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid4())
+    id = models.UUIDField(primary_key=True, default=uuid4)
     instance_type = models.CharField(max_length=250)
     instance_id = models.IntegerField()
     previous_state = models.JSONField()

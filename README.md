@@ -8,7 +8,8 @@
  - [x] Create logs collector service
  - [x] Create a logs repository 
  - [x] Create a logs list endpoint
- - [ ] Add test
- - [ ] Add open api schema
+ - [x] Add test
+ - [x] Add open api schema
+ - [ ] Only log changes for models with auditlogmixin
  - 
-
+ 
