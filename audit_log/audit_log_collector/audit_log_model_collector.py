@@ -4,6 +4,9 @@ from datetime import datetime
 
 from django.db.models import Model
 from django.forms import model_to_dict
+from django.utils import timezone
+
+from audit_log.models import Auditable
 
 
 @dataclass
@@ -37,19 +40,16 @@ class AuditLogModelCollector:
     def __init__(self, auditlog_repository: AuditLogRepository):
         self.auditlog_repository = auditlog_repository
 
-    def __call__(self, actual_instance: Model, previous_instance: Model, author) -> list:
+    def __call__(self, actual_instance: Auditable, previous_instance: Auditable, author: str) -> list:
         self.model_fields = self.get_fields(instance=actual_instance)
-        """
-        Si el almacenamiento es un problema de escalabilidad:
-        en lugar de guardar antiguo y nuevo, solo los campos que han cambiado y el valor previo y posterior
-        """
+
         log = Log(
-            instance_type=actual_instance.log_type,
+            instance_type=actual_instance.get_auditable_type(),
             instance_id=actual_instance.pk,
             actual_state=self.get_raw_data(instance=actual_instance),
             previous_state=self.get_raw_data(instance=previous_instance),
             author=author,
-            created=datetime.now(),
+            created=timezone.now(),
         )
         self.auditlog_repository.save(log=log)
 

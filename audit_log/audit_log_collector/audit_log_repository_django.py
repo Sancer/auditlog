@@ -9,7 +9,8 @@ logger = getLogger(__name__)
 
 class AuditLogRepositoryDjango(AuditLogRepository):
     def save(self, log: Log) -> None:
-        log_model = LogModel(  # TODO: se podría hacer con __dict__ y luego spread operator, pero prefiero ser explicito
+        # it could be done with __dict__ and then spread operator, but I prefer to be explicit
+        log_model = LogModel(
             instance_type=log.instance_type,
             instance_id=log.instance_id,
             previous_state=log.previous_state,
@@ -33,7 +34,7 @@ class AuditLogRepositoryDjango(AuditLogRepository):
             filters['created__lte'] = created_to
 
         if author:
-            # TODO: Tendríamos que consultar la estategía de filtrado ejem: (start, exact, ...)
+            # TODO: We would have to consult the filtering strategy e.g.: (start, exact, ...)
             filters['author__icontains'] = author
 
         logs = LogModel.objects.filter(**filters)
@@ -51,5 +52,5 @@ class AuditLogRepositoryDjango(AuditLogRepository):
         )
 
 
-# TODO: sacarlo a un contenedor de dependencias, hago esto así para no estar generando instancías todo el rato
+# TODO: move it to a dependency container
 audit_log_repository = AuditLogRepositoryDjango()

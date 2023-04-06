@@ -1,8 +1,11 @@
 from django.db import models
 
+from audit_log.models import Auditable
 
-class Product(models.Model):
-    log_type = 'product'
+
+class Product(Auditable, models.Model):
+    def get_auditable_type(self):
+        return 'product'
 
     example_field1 = models.CharField(max_length=250, null=True, blank=True)
     example_field2 = models.CharField(max_length=250, null=True, blank=True)
