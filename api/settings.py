@@ -39,8 +39,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "django_filters",
     "rest_framework_simplejwt",
-    "drf_spectacular",
-    "drf_spectacular_sidecar",
+    "drf_yasg",
 
     "audit_log",
     "product",
@@ -140,15 +139,17 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 100,
 }
 
-
-SPECTACULAR_SETTINGS = {
-    'TITLE': 'PoC Api with audit log',
-    'DESCRIPTION': 'Example of system to generate audit log',
-    'VERSION': '0.1.0',
-    'SERVE_INCLUDE_SCHEMA': False,
-}
-
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+}
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
 }
