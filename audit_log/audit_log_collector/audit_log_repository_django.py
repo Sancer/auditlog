@@ -1,7 +1,10 @@
 from datetime import datetime, timedelta
 from logging import getLogger
 
-from audit_log.audit_log_collector.audit_log_model_collector import AuditLogRepository, Log
+from audit_log.audit_log_collector.audit_log_model_collector import (
+    AuditLogRepository,
+    Log,
+)
 from audit_log.models import Log as LogModel
 
 logger = getLogger(__name__)
@@ -20,9 +23,17 @@ class AuditLogRepositoryDjango(AuditLogRepository):
         )
         log_model.save()
 
-    def search(self, instance_type: str, instance_id: int, created_from: str = None, created_to: str = None,
-               author: str = None) -> list[Log]:
-        default_creted_from = datetime.now() - timedelta(days=7)  # TODO: mover el magic number a settings
+    def search(
+        self,
+        instance_type: str,
+        instance_id: int,
+        created_from: str = None,
+        created_to: str = None,
+        author: str = None,
+    ) -> list[Log]:
+        default_creted_from = datetime.now() - timedelta(
+            days=7
+        )  # TODO: mover el magic number a settings
         created_from = created_from if created_from else default_creted_from
         filters = {
             "instance_type": instance_type,
@@ -31,11 +42,11 @@ class AuditLogRepositoryDjango(AuditLogRepository):
         }
 
         if created_to:
-            filters['created__lte'] = created_to
+            filters["created__lte"] = created_to
 
         if author:
             # TODO: We would have to consult the filtering strategy e.g.: (start, exact, ...)
-            filters['author__icontains'] = author
+            filters["author__icontains"] = author
 
         logs = LogModel.objects.filter(**filters)
 

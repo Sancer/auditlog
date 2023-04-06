@@ -8,20 +8,23 @@ from product.models import Product
 
 
 class TestRetrieveUpdateDestroyProductView(TestCase):
-
     @classmethod
     def setUpTestData(cls):
-        cls.user_name = 'testuser'
-        cls.user_pass = 'securepassword'
-        cls.user = User.objects.create_user(username=cls.user_name, password=cls.user_name)
+        cls.user_name = "testuser"
+        cls.user_pass = "securepassword"
+        cls.user = User.objects.create_user(
+            username=cls.user_name, password=cls.user_name
+        )
 
     def setUp(self) -> None:
         refresh = RefreshToken.for_user(self.user)
-        self.token = f'Bearer {refresh.access_token}'
-        self.item = Product.objects.create(example_field1='123')
+        self.token = f"Bearer {refresh.access_token}"
+        self.item = Product.objects.create(example_field1="123")
 
     def test_url_contract(self):
-        self.assertEqual(self._get_url(pk=self.item.pk), f'/api/product/product/{self.item.pk}/')
+        self.assertEqual(
+            self._get_url(pk=self.item.pk), f"/api/product/product/{self.item.pk}/"
+        )
 
     def test_update_ok(self):
         payload = {
@@ -35,19 +38,19 @@ class TestRetrieveUpdateDestroyProductView(TestCase):
             "example_field8": "5",
             "example_field9": None,
             "example_field10": None,
-            "example_field11": None
+            "example_field11": None,
         }
         response = self.client.put(
-            headers={'Authorization': self.token},
+            headers={"Authorization": self.token},
             path=self._get_url(pk=self.item.pk),
-            json=payload
+            json=payload,
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_retrieve_ok(self):
         response = self.client.get(
-            headers={'Authorization': self.token},
+            headers={"Authorization": self.token},
             path=self._get_url(pk=self.item.pk),
         )
 
@@ -55,11 +58,11 @@ class TestRetrieveUpdateDestroyProductView(TestCase):
 
     def test_destroy_ok(self):
         response = self.client.delete(
-            headers={'Authorization': self.token},
+            headers={"Authorization": self.token},
             path=self._get_url(pk=self.item.pk),
         )
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def _get_url(self, **kwargs):
-        return reverse('product:retrieve_update_destroy_product', kwargs=kwargs)
+        return reverse("product:retrieve_update_destroy_product", kwargs=kwargs)

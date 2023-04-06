@@ -18,4 +18,10 @@ class SearchQueryParamsLogSerializer(serializers.Serializer):
     author = serializers.CharField(required=False)
 
     class Meta:
-        fields = ('instance_id', 'instance_type', 'created_from', 'created_to', 'author')
+        fields = (
+            "instance_id",
+            "instance_type",
+            "created_from",
+            "created_to",
+            "author",
+        )

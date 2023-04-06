@@ -23,14 +23,19 @@ class Log:
 
 
 class AuditLogRepository(ABC):
-
     @abstractmethod
     def save(self, log: Log) -> None:
         raise NotImplementedError
 
     @abstractmethod
-    def search(self, instance_type: str, instance_id: int, created_from: str = None, created_to: str = None,
-               author: str = None) -> list[Log]:
+    def search(
+        self,
+        instance_type: str,
+        instance_id: int,
+        created_from: str = None,
+        created_to: str = None,
+        author: str = None,
+    ) -> list[Log]:
         raise NotImplementedError
 
 
@@ -40,7 +45,9 @@ class AuditLogModelCollector:
     def __init__(self, auditlog_repository: AuditLogRepository):
         self.auditlog_repository = auditlog_repository
 
-    def __call__(self, actual_instance: Auditable, previous_instance: Auditable, author: str) -> list:
+    def __call__(
+        self, actual_instance: Auditable, previous_instance: Auditable, author: str
+    ) -> list:
         self.model_fields = self.get_fields(instance=actual_instance)
 
         log = Log(

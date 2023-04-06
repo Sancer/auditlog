@@ -14,11 +14,10 @@ class Log(models.Model):
     created = models.DateTimeField()
 
     def __str__(self) -> str:
-        return f'{self.instance_type}:{self.instance_id}:{self.created.isoformat()}'
+        return f"{self.instance_type}:{self.instance_id}:{self.created.isoformat()}"
 
 
 class Auditable(models.Model):
-
     @abstractmethod
     def get_auditable_type(self):
         # I don't use the __class__.__name__ to avoid that if you change the class it changes without realizing it.

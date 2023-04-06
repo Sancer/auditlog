@@ -21,4 +21,4 @@ class Product(Auditable, models.Model):
     example_field15 = models.CharField(max_length=250, null=True, blank=True)
 
     def get_auditable_type(self):
-        return 'product'
+        return "product"

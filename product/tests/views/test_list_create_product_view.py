@@ -6,20 +6,22 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class TestListCreateProductView(TestCase):
-    url = reverse('product:list_create_product')
+    url = reverse("product:list_create_product")
 
     @classmethod
     def setUpTestData(cls):
-        cls.user_name = 'testuser'
-        cls.user_pass = 'securepassword'
-        cls.user = User.objects.create_user(username=cls.user_name, password=cls.user_name)
+        cls.user_name = "testuser"
+        cls.user_pass = "securepassword"
+        cls.user = User.objects.create_user(
+            username=cls.user_name, password=cls.user_name
+        )
 
     def setUp(self) -> None:
         refresh = RefreshToken.for_user(self.user)
-        self.token = f'Bearer {refresh.access_token}'
+        self.token = f"Bearer {refresh.access_token}"
 
     def test_url_contract(self):
-        self.assertEqual(self.url, '/api/product/product/')
+        self.assertEqual(self.url, "/api/product/product/")
 
     def test_create_ok(self):
         payload = {
@@ -33,18 +35,16 @@ class TestListCreateProductView(TestCase):
             "example_field8": "5",
             "example_field9": None,
             "example_field10": None,
-            "example_field11": None
+            "example_field11": None,
         }
         response = self.client.post(
-            headers={'Authorization': self.token},
-            path=self.url,
-            json=payload
+            headers={"Authorization": self.token}, path=self.url, json=payload
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_list_ok(self):
         response = self.client.get(
-            headers={'Authorization': self.token},
+            headers={"Authorization": self.token},
             path=self.url,
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
