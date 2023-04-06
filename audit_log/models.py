@@ -13,6 +13,10 @@ class Log(models.Model):
     author = models.CharField(max_length=250)
     created = models.DateTimeField()
 
+    index_together = [
+        ["instance_type", "instance_id", "created"],
+    ]
+
     def __str__(self) -> str:
         return f"{self.instance_type}:{self.instance_id}:{self.created.isoformat()}"
 
