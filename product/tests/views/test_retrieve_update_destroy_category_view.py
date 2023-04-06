@@ -21,7 +21,7 @@ class TestRetrieveUpdateDestroyCategoryView(TestCase):
         self.item = Category.objects.create(example_field1='123')
 
     def test_url_contract(self):
-        self.assertEqual(self._get_url(pk=self.item.pk), f'/product/category/{self.item.pk}/')
+        self.assertEqual(self._get_url(pk=self.item.pk), f'/api/product/category/{self.item.pk}/')
 
     def test_update_ok(self):
         payload = {

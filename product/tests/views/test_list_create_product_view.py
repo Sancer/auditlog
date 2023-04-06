@@ -19,7 +19,7 @@ class TestListCreateProductView(TestCase):
         self.token = f'Bearer {refresh.access_token}'
 
     def test_url_contract(self):
-        self.assertEqual(self.url, '/product/product/')
+        self.assertEqual(self.url, '/api/product/product/')
 
     def test_create_ok(self):
         payload = {

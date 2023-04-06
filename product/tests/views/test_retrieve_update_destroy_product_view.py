@@ -21,7 +21,7 @@ class TestRetrieveUpdateDestroyProductView(TestCase):
         self.item = Product.objects.create(example_field1='123')
 
     def test_url_contract(self):
-        self.assertEqual(self._get_url(pk=self.item.pk), f'/product/product/{self.item.pk}/')
+        self.assertEqual(self._get_url(pk=self.item.pk), f'/api/product/product/{self.item.pk}/')
 
     def test_update_ok(self):
         payload = {
@@ -42,6 +42,7 @@ class TestRetrieveUpdateDestroyProductView(TestCase):
             path=self._get_url(pk=self.item.pk),
             json=payload
         )
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_retrieve_ok(self):
@@ -49,6 +50,7 @@ class TestRetrieveUpdateDestroyProductView(TestCase):
             headers={'Authorization': self.token},
             path=self._get_url(pk=self.item.pk),
         )
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_destroy_ok(self):
@@ -56,6 +58,7 @@ class TestRetrieveUpdateDestroyProductView(TestCase):
             headers={'Authorization': self.token},
             path=self._get_url(pk=self.item.pk),
         )
+
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def _get_url(self, **kwargs):

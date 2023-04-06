@@ -12,14 +12,15 @@ class TestListCreateCategoryView(TestCase):
     def setUpTestData(cls):
         cls.user_name = 'testuser'
         cls.user_pass = 'securepassword'
-        cls.user = User.objects.create_user(username=cls.user_name, password=cls.user_name)
+        cls.user = User.objects.create_user(username=cls.user_name, password=cls.user_pass)
 
     def setUp(self) -> None:
         refresh = RefreshToken.for_user(self.user)
         self.token = f'Bearer {refresh.access_token}'
+        self.client.force_login(user=self.user)
 
     def test_url_contract(self):
-        self.assertEqual(self.url, '/product/category/')
+        self.assertEqual(self.url, '/api/product/category/')
 
     def test_create_ok(self):
         payload = {
@@ -40,6 +41,7 @@ class TestListCreateCategoryView(TestCase):
             path=self.url,
             json=payload
         )
+
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_list_ok(self):
@@ -47,4 +49,5 @@ class TestListCreateCategoryView(TestCase):
             headers={'Authorization': self.token},
             path=self.url,
         )
+
         self.assertEqual(response.status_code, status.HTTP_200_OK)
