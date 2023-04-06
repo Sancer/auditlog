@@ -10,6 +10,6 @@
  - [x] Create a logs list endpoint
  - [x] Add test
  - [x] Add open api schema
- - [ ] Only log changes for models with auditlogmixin
- - 
+ - [x] only register changes in models that inherit from auditable class
+ - [ ] Search by title
  
