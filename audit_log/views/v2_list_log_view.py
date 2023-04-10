@@ -18,5 +18,4 @@ class V2ListLogView(GenericAPIView):
         search = serializer.data
         response: PaginatedResponse[Log] = self.audit_log_repository.search(**search)
         context = response.dict()
-        # TODO: falta definir la paginación (con el limite de elementos por pagina)
         return JsonResponse(data=context)
