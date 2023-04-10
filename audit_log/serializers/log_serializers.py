@@ -1,3 +1,4 @@
+from django.conf import settings
 from rest_framework import serializers
 
 from audit_log.models import Log
@@ -10,12 +11,13 @@ class LogSerializer(serializers.ModelSerializer):
 
 
 class SearchQueryParamsLogSerializer(serializers.Serializer):
-    instance_id = serializers.IntegerField()
-    # TODO: aquí sería bueno poner las choises con un enum
-    instance_type = serializers.CharField()
+    instance_id = serializers.IntegerField(required=False)
+    instance_type = serializers.CharField(required=False)
     created_from = serializers.DateTimeField(required=False)
     created_to = serializers.DateTimeField(required=False)
     author = serializers.CharField(required=False)
+    limit = serializers.IntegerField(required=False)
+    offset = serializers.IntegerField(required=False)
 
     class Meta:
         fields = (

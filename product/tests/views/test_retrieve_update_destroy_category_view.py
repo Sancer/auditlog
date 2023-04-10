@@ -1,25 +1,24 @@
 from django.contrib.auth.models import User
-from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
+from rest_framework.test import APITestCase
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from product.models import Category
 
 
-class TestRetrieveUpdateDestroyCategoryView(TestCase):
+class TestRetrieveUpdateDestroyCategoryView(APITestCase):
     @classmethod
     def setUpTestData(cls):
-        cls.user_name = "testuser"
-        cls.user_pass = "securepassword"
-        cls.user = User.objects.create_user(
-            username=cls.user_name, password=cls.user_name
-        )
+        username = "tim@me.com"
+        password = "strongP@assword!"
+        cls.user = User.objects.create_user(username, username, password)
+        refresh = RefreshToken.for_user(cls.user)
+        cls.token = f"Bearer {refresh.access_token}"
 
-    def setUp(self) -> None:
-        refresh = RefreshToken.for_user(self.user)
-        self.token = f"Bearer {refresh.access_token}"
-        self.item = Category.objects.create(example_field1="123")
+    def setUp(self):
+        self.client.credentials(HTTP_AUTHORIZATION=self.token)
+        self.item = Category.objects.create(title="123")
 
     def test_url_contract(self):
         self.assertEqual(
@@ -28,8 +27,8 @@ class TestRetrieveUpdateDestroyCategoryView(TestCase):
 
     def test_update_ok(self):
         payload = {
-            "example_field1": "4567",
-            "example_field2": "2",
+            "title": "4567",
+            "description": "2",
             "example_field3": "123",
             "example_field4": None,
             "example_field5": None,
@@ -41,7 +40,6 @@ class TestRetrieveUpdateDestroyCategoryView(TestCase):
             "example_field11": None,
         }
         response = self.client.put(
-            headers={"Authorization": self.token},
             path=self._get_url(pk=self.item.pk),
             json=payload,
         )
@@ -49,14 +47,12 @@ class TestRetrieveUpdateDestroyCategoryView(TestCase):
 
     def test_retrieve_ok(self):
         response = self.client.get(
-            headers={"Authorization": self.token},
             path=self._get_url(pk=self.item.pk),
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_destroy_ok(self):
         response = self.client.delete(
-            headers={"Authorization": self.token},
             path=self._get_url(pk=self.item.pk),
         )
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)

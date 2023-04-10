@@ -1,11 +1,12 @@
 from datetime import datetime, timedelta
 from logging import getLogger
 
-from audit_log.audit_log_collector.audit_log_model_collector import (
-    AuditLogRepository,
-    Log,
-)
+from django.conf import settings
+
 from audit_log.models import Log as LogModel
+
+from .audit_log_repository import AuditLogRepository, Log
+from .paginated_respone import PaginatedResponse
 
 logger = getLogger(__name__)
 
@@ -25,21 +26,28 @@ class AuditLogRepositoryDjango(AuditLogRepository):
 
     def search(
         self,
-        instance_type: str,
-        instance_id: int,
+        instance_type: str = None,
+        instance_id: int = None,
         created_from: str = None,
         created_to: str = None,
         author: str = None,
-    ) -> list[Log]:
+        limit: int = settings.PAGINATION_PAGE_SIZE,
+        offset: int = 0,
+    ) -> PaginatedResponse[Log]:
         default_creted_from = datetime.now() - timedelta(
             days=7
-        )  # TODO: mover el magic number a settings
+        )  # TODO: move the magic number to settings
+        filters = {}
         created_from = created_from if created_from else default_creted_from
-        filters = {
-            "instance_type": instance_type,
-            "instance_id": instance_id,
-            "created__gte": created_from,
-        }
+
+        if instance_type:
+            filters["instance_type"] = instance_type
+
+        if instance_id:
+            filters["instance_id"] = instance_id
+
+        if created_from:
+            filters["created__gte"] = created_from
 
         if created_to:
             filters["created__lte"] = created_to
@@ -49,8 +57,11 @@ class AuditLogRepositoryDjango(AuditLogRepository):
             filters["author__icontains"] = author
 
         logs = LogModel.objects.filter(**filters)
+        paginated_logs = logs[offset:offset+limit]
 
-        return [self._to_native(log) for log in logs]
+        return PaginatedResponse(
+            count=logs.count(), results=[self._to_native(log) for log in paginated_logs]
+        )
 
     def _to_native(self, log: LogModel) -> Log:
         return Log(

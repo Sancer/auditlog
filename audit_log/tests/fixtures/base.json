@@ -1,0 +1,140 @@
+[
+  {
+    "model": "audit_log.log",
+    "pk": "73aa00dd-f4ba-4de6-aa23-eb34c514ed28",
+    "fields": {
+      "instance_type": "product",
+      "instance_id": 3,
+      "previous_state": {
+        "id": 3,
+        "title": "prueba",
+        "description": null,
+        "example_field3": "3",
+        "example_field4": null,
+        "example_field5": null,
+        "example_field6": null,
+        "example_field7": null,
+        "example_field8": "5",
+        "example_field9": null,
+        "example_field10": null,
+        "example_field11": null,
+        "example_field12": null,
+        "example_field13": null,
+        "example_field14": null,
+        "example_field15": null
+      },
+      "actual_state": {
+        "id": 3,
+        "title": "prueba",
+        "description": null,
+        "example_field3": "3",
+        "example_field4": null,
+        "example_field5": null,
+        "example_field6": null,
+        "example_field7": null,
+        "example_field8": "5",
+        "example_field9": null,
+        "example_field10": null,
+        "example_field11": null,
+        "example_field12": null,
+        "example_field13": null,
+        "example_field14": null,
+        "example_field15": null
+      },
+      "author": "Uriel",
+      "created": "2023-04-06T23:44:37.114Z"
+    }
+  },
+  {
+    "model": "audit_log.log",
+    "pk": "f0a4a121-7ce0-4b23-9373-015f715e1d0e",
+    "fields": {
+      "instance_type": "product",
+      "instance_id": 3,
+      "previous_state": {
+        "id": 3,
+        "title": "prueba",
+        "description": null,
+        "example_field3": "3",
+        "example_field4": null,
+        "example_field5": null,
+        "example_field6": null,
+        "example_field7": null,
+        "example_field8": "5",
+        "example_field9": null,
+        "example_field10": null,
+        "example_field11": null,
+        "example_field12": null,
+        "example_field13": null,
+        "example_field14": null,
+        "example_field15": null
+      },
+      "actual_state": {
+        "id": 3,
+        "title": "prueba",
+        "description": null,
+        "example_field3": "3",
+        "example_field4": "asdasdasd",
+        "example_field5": null,
+        "example_field6": null,
+        "example_field7": null,
+        "example_field8": "5",
+        "example_field9": null,
+        "example_field10": null,
+        "example_field11": null,
+        "example_field12": null,
+        "example_field13": null,
+        "example_field14": null,
+        "example_field15": null
+      },
+      "author": "Uriel",
+      "created": "2023-04-06T23:44:51.510Z"
+    }
+  },
+  {
+    "model": "audit_log.log",
+    "pk": "10a4a121-7ce0-4b23-9373-015f715e1d0e",
+    "fields": {
+      "instance_type": "product",
+      "instance_id": 5,
+      "previous_state": {
+        "id": 3,
+        "title": "prueba",
+        "description": null,
+        "example_field3": "3",
+        "example_field4": null,
+        "example_field5": null,
+        "example_field6": null,
+        "example_field7": null,
+        "example_field8": "5",
+        "example_field9": null,
+        "example_field10": null,
+        "example_field11": null,
+        "example_field12": null,
+        "example_field13": null,
+        "example_field14": null,
+        "example_field15": null
+      },
+      "actual_state": {
+        "id": 3,
+        "title": "prueba",
+        "description": null,
+        "example_field3": "3",
+        "example_field4": "asdasdasd",
+        "example_field5": null,
+        "example_field6": null,
+        "example_field7": null,
+        "example_field8": "5",
+        "example_field9": null,
+        "example_field10": null,
+        "example_field11": null,
+        "example_field12": null,
+        "example_field13": null,
+        "example_field14": null,
+        "example_field15": null
+      },
+      "author": "other",
+      "created": "2023-04-10T23:44:51.510Z"
+    }
+  }
+]

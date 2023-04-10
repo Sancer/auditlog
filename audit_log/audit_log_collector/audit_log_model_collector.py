@@ -1,42 +1,9 @@
-from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from datetime import datetime
-
 from django.db.models import Model
 from django.forms import model_to_dict
 from django.utils import timezone
 
+from .audit_log_repository import Log, AuditLogRepository
 from audit_log.models import Auditable
-
-
-@dataclass
-class Log:
-    instance_type: str
-    instance_id: int
-    previous_state: dict
-    actual_state: dict
-    author: str
-    created: datetime
-
-    def dict(self):
-        return self.__dict__
-
-
-class AuditLogRepository(ABC):
-    @abstractmethod
-    def save(self, log: Log) -> None:
-        raise NotImplementedError
-
-    @abstractmethod
-    def search(
-        self,
-        instance_type: str,
-        instance_id: int,
-        created_from: str = None,
-        created_to: str = None,
-        author: str = None,
-    ) -> list[Log]:
-        raise NotImplementedError
 
 
 class AuditLogModelCollector:
