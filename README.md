@@ -9,7 +9,9 @@ For large volumes of data it is better to use a persistence system designed for 
 # Index
 <!-- TOC -->
 * [Introduction](#introduction)
+* [Index](#index)
 * [Setup local](#setup-local)
+  * [Copy envfile](#copy-envfile)
   * [Dependencies](#dependencies)
   * [Prepare database](#prepare-database)
   * [Create superuser](#create-superuser)
@@ -26,6 +28,11 @@ For large volumes of data it is better to use a persistence system designed for 
 <!-- TOC -->
 
 # Setup local
+## Copy envfile
+
+```sh
+cp .env.example .env
+```
 ## Dependencies
 
 ```sh
