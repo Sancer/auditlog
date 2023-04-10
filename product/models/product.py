@@ -1,9 +1,7 @@
 from django.db import models
 
-from audit_log.models import Auditable
 
-
-class Product(Auditable, models.Model):
+class Product(models.Model):
     title = models.CharField(max_length=250, null=True, blank=True, db_index=True)
     description = models.TextField(null=True, blank=True)
     example_field3 = models.CharField(max_length=250, null=True, blank=True)
@@ -19,6 +17,3 @@ class Product(Auditable, models.Model):
     example_field13 = models.CharField(max_length=250, null=True, blank=True)
     example_field14 = models.CharField(max_length=250, null=True, blank=True)
     example_field15 = models.CharField(max_length=250, null=True, blank=True)
-
-    def get_auditable_type(self):
-        return "product"

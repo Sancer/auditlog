@@ -2,8 +2,8 @@ from django.db.models import Model
 from django.forms import model_to_dict
 from django.utils import timezone
 
-from .audit_log_repository import Log, AuditLogRepository
-from audit_log.models import Auditable
+from ..enums import ImplementedModelsEnum
+from .audit_log_repository import AuditLogRepository, Log
 
 
 class AuditLogModelCollector:
@@ -13,12 +13,16 @@ class AuditLogModelCollector:
         self.auditlog_repository = auditlog_repository
 
     def __call__(
-        self, actual_instance: Auditable, previous_instance: Auditable, author: str
+        self,
+        actual_instance: Model,
+        previous_instance: Model,
+        author: str,
+        instance_type: ImplementedModelsEnum,
     ) -> list:
         self.model_fields = self.get_fields(instance=actual_instance)
 
         log = Log(
-            instance_type=actual_instance.get_auditable_type(),
+            instance_type=instance_type,
             instance_id=actual_instance.pk,
             actual_state=self.get_raw_data(instance=actual_instance),
             previous_state=self.get_raw_data(instance=previous_instance),
