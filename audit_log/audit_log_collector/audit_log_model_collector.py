@@ -1,6 +1,9 @@
+import json
+
 from django.db.models import Model
 from django.forms import model_to_dict
 from django.utils import timezone
+from django.core.serializers.json import DjangoJSONEncoder
 
 from .audit_log_repository import Log, AuditLogRepository
 from audit_log.models import Auditable
@@ -31,4 +34,7 @@ class AuditLogModelCollector:
         return [field.name for field in instance.__class__._meta.fields]
 
     def get_raw_data(self, instance: Model) -> dict:
-        return model_to_dict(instance, fields=self.model_fields)
+        native_data = json.dumps(model_to_dict(instance, fields=self.model_fields), cls=DjangoJSONEncoder)
+        return json.loads(native_data)
+
+

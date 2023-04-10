@@ -31,7 +31,7 @@ class TestListCreateProductView(APITestCase):
             "example_field5": None,
             "example_field6": None,
             "example_field7": None,
-            "example_field8": "5",
+            "example_field8": None,
             "example_field9": None,
             "example_field10": None,
             "example_field11": None,
