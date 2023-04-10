@@ -4,8 +4,8 @@ from product.models import Product, Category
 
 
 class ImplementedModelsEnum(Enum):
-    PRODUCT = Product.__class__.__name__, 'Product'
-    CATEGORY = Category.__class__.__name__, 'Category'
+    PRODUCT = Product.__class__, 'Product'
+    CATEGORY = Category.__class__, 'Category'
 
     def __new__(cls, *values):
         obj = object.__new__(cls)
